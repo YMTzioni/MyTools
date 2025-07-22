@@ -1,0 +1,359 @@
+body {
+    font-family: 'Segoe UI', 'Arial', 'sans-serif';
+    background: linear-gradient(120deg, #f7fafd 70%, #e3eafc 100%);
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 420px;
+    margin: 48px auto;
+    background: #fcfdff;
+    padding: 36px 28px 28px 28px;
+    border-radius: 14px;
+    box-shadow: 0 4px 24px rgba(30, 42, 90, 0.10), 0 1.5px 4px rgba(30,42,90,0.07);
+    text-align: center;
+    border: 1.5px solid #e3eafc;
+}
+
+h1 {
+    margin-bottom: 22px;
+    font-size: 1.7em;
+    letter-spacing: 0.5px;
+    color: #1a237e;
+}
+
+input[type="password"], input[type="text"], input[type="number"] {
+    width: 80%;
+    padding: 10px;
+    margin-bottom: 16px;
+    border: 1.5px solid #bfc9d9;
+    border-radius: 6px;
+    font-size: 1em;
+    transition: border 0.2s;
+    background: #f8fafc;
+}
+input[type="password"]:focus, input[type="text"]:focus, input[type="number"]:focus {
+    border: 1.5px solid #1976d2;
+    outline: none;
+    background: #fff;
+    box-shadow: 0 0 0 2px #b3d1ff;
+}
+
+button, #copyBtn, #passwordHistory button {
+    padding: 10px 20px;
+    background: #1976d2;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+    box-shadow: 0 1px 2px rgba(30,42,90,0.04);
+}
+button:hover, #copyBtn:hover, #passwordHistory button:hover {
+    background: #1565c0;
+    box-shadow: 0 2px 8px rgba(30,42,90,0.08);
+}
+
+#feedback {
+    margin-top: 20px;
+    font-size: 1em;
+    min-height: 40px;
+}
+
+#generator {
+    margin-top: 32px;
+    text-align: left;
+}
+#generator h2 {
+    text-align: center;
+    font-size: 1.18em;
+    margin-bottom: 12px;
+    color: #283593;
+}
+#generator label {
+    margin-right: 12px;
+    font-size: 1em;
+}
+#generator input[type="number"] {
+    margin-left: 4px;
+    margin-right: 8px;
+    padding: 4px;
+    border-radius: 6px;
+    border: 1.5px solid #bfc9d9;
+    width: 54px;
+}
+#generatedPassword {
+    margin-top: 10px;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1.5px solid #bfc9d9;
+    font-size: 1em;
+    background: #f8fafc;
+    transition: border 0.2s;
+}
+#generatedPassword:focus {
+    border: 1.5px solid #1976d2;
+    background: #fff;
+}
+#copyBtn {
+    margin-left: 8px;
+    padding: 8px 12px;
+    background: #43a047;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background 0.2s;
+}
+#copyBtn:hover {
+    background: #388e3c;
+}
+#generatedStrength {
+    display: block;
+    margin-top: 8px;
+    font-weight: bold;
+    color: #283593;
+}
+#historySection {
+    margin-top: 18px;
+    text-align: left;
+}
+#historySection h3 {
+    margin-bottom: 6px;
+    font-size: 1em;
+    color: #1a237e;
+}
+#passwordHistory {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 100px;
+    overflow-y: auto;
+}
+#passwordHistory li {
+    background: #f7fafd;
+    margin-bottom: 4px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95em;
+    border: 1px solid #e3eafc;
+}
+#passwordHistory button {
+    margin-left: 8px;
+    padding: 2px 8px;
+    font-size: 0.9em;
+    background: #1976d2;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+#passwordHistory button:hover {
+    background: #1565c0;
+}
+#infoTooltip {
+    position: relative;
+    display: inline-block;
+    margin-top: 18px;
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+#infoTooltip span {
+    background: #1976d2;
+    color: #fff;
+    border-radius: 50%;
+    padding: 2px 8px;
+    font-weight: bold;
+    font-size: 1.1em;
+    box-shadow: 0 1px 4px rgba(30,42,90,0.08);
+}
+#tooltipText {
+    visibility: hidden;
+    width: 260px;
+    background: #333;
+    color: #fff;
+    text-align: left;
+    border-radius: 8px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1;
+    left: 110%;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.95em;
+    box-shadow: 0 2px 8px rgba(30,42,90,0.12);
+}
+#infoTooltip:hover #tooltipText {
+    visibility: visible;
+}
+#progressBarContainer {
+    width: 100%;
+    background: #f0f4fa;
+    border-radius: 8px;
+    margin: 16px 0 8px 0;
+    height: 18px;
+    overflow: hidden;
+    border: 1px solid #c7d0e6;
+}
+#progressBar {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, #d32f2f 0%, #fbc02d 50%, #43a047 100%);
+    border-radius: 8px;
+    transition: width 0.3s, background 0.3s;
+    box-shadow: 0 1px 4px rgba(30,42,90,0.10);
+}
+#minReqs {
+    margin-top: 8px;
+    font-size: 0.95em;
+    color: #d32f2f;
+}
+#togglePassword {
+    margin-top: 8px;
+    background: none;
+    border: none;
+    font-size: 1.2em;
+    cursor: pointer;
+    color: #1976d2;
+    transition: color 0.2s;
+}
+#togglePassword:hover {
+    color: #1565c0;
+}
+/* RTL & Hebrew support */
+body[dir="rtl"], html[dir="rtl"] {
+    direction: rtl;
+    text-align: right;
+}
+.container[dir="rtl"] {
+    text-align: right;
+}
+/* Transitions for smoother UI */
+button, #copyBtn, #passwordHistory button, input[type="password"], input[type="text"], input[type="number"], #progressBar {
+    transition: background 0.2s, box-shadow 0.2s, border 0.2s, color 0.2s, transform 0.08s, width 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+/* Button active state */
+button:active, #copyBtn:active, #passwordHistory button:active {
+    transform: scale(1.04);
+}
+/* Soft glow on input focus */
+input[type="password"]:focus, input[type="text"]:focus, input[type="number"]:focus {
+    box-shadow: 0 0 0 2px #b3d1ff;
+}
+/* Checkmark animation for copy button */
+#copyBtn.copied {
+    background: #43a047 !important;
+    color: #fff;
+    position: relative;
+}
+#copyBtn.copied::after {
+    content: '✔';
+    position: absolute;
+    right: -22px;
+    top: 50%;
+    transform: translateY(-50%) scale(1.2);
+    color: #43a047;
+    font-size: 1.2em;
+    opacity: 1;
+    animation: fadeCheck 0.8s linear;
+}
+@keyframes fadeCheck {
+    0% { opacity: 0; right: -10px; }
+    30% { opacity: 1; right: -22px; }
+    100% { opacity: 0; right: -30px; }
+}
+/* Shake animation for weak password */
+.shake {
+    animation: shake 0.3s linear 1;
+}
+@keyframes shake {
+    0% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    40% { transform: translateX(6px); }
+    60% { transform: translateX(-4px); }
+    80% { transform: translateX(4px); }
+    100% { transform: translateX(0); }
+}
+/* Softer color palette for backgrounds */
+body {
+    background: linear-gradient(120deg, #f7fafd 70%, #e3eafc 100%);
+}
+.container {
+    background: #fcfdff;
+    border: 1.5px solid #e3eafc;
+}
+#progressBarContainer {
+    background: #f0f4fa;
+    border: 1px solid #c7d0e6;
+}
+#passwordHistory li {
+    background: #f7fafd;
+    border: 1px solid #e3eafc;
+}
+@media (max-width: 700px) {
+    .container {
+        max-width: 98vw;
+        padding: 10vw 2vw 6vw 2vw;
+        margin: 0 auto;
+        border-radius: 0;
+        box-shadow: none;
+        border-width: 0 0 1.5px 0;
+    }
+    h1 {
+        font-size: 1.2em;
+    }
+    #generator h2 {
+        font-size: 1em;
+    }
+    #progressBarContainer {
+        height: 12px;
+    }
+    #generatedPassword, input[type="password"], input[type="text"], input[type="number"] {
+        font-size: 1em;
+        width: 98%;
+        min-width: 0;
+    }
+    button, #copyBtn, #passwordHistory button {
+        font-size: 1em;
+        padding: 10px 0;
+        width: 100%;
+        margin: 6px 0;
+        min-width: 0;
+    }
+    #historySection {
+        font-size: 0.95em;
+    }
+    #infoTooltip span {
+        font-size: 1em;
+        padding: 2px 7px;
+    }
+    #tooltipText {
+        width: 90vw;
+        left: 0;
+        top: 110%;
+        transform: none;
+        font-size: 0.95em;
+    }
+    #togglePassword {
+        font-size: 1.1em;
+    }
+}
+@media (max-width: 500px) {
+    .container {
+        max-width: 98vw;
+        padding: 12px 4vw;
+    }
+    #progressBarContainer {
+        height: 12px;
+    }
+    #generatedPassword {
+        font-size: 0.95em;
+    }
+} 
