@@ -1,0 +1,5 @@
+psutil
+wmi
+pywin32
+requests
+tabulate 
