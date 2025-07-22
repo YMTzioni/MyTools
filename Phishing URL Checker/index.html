@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing URL Checker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="url-checker-intro">
+        <h1>Phishing URL Checker</h1>
+        <p>Enter a website address (URL) below and click <strong>Check URL</strong> to see if it might be suspicious. This tool uses simple rules to help you spot possible phishing links.<br><em>For educational use only – always use your own judgment!</em></p>
+        <div class="url-checker-box">
+            <input type="text" id="urlInput" placeholder="Enter website URL (e.g. https://example.com)">
+            <button id="checkUrlBtn">Check URL</button>
+        </div>
+        <div id="urlCheckResult" class="url-check-result" style="display:none;"></div>
+        <div id="externalLinks" class="external-links" style="display:none;">
+            <h3>Manual Check in VirusTotal</h3>
+            <p class="external-links-note">Click below to check the entered URL in VirusTotal. <span title="A new tab will open with the check for your URL">&#9432;</span></p>
+            <div class="external-links-list">
+                <a id="vtLink" href="#" target="_blank" rel="noopener" class="external-link">
+                    <span class="ext-icon">🔬</span> VirusTotal<br>
+                    <span class="ext-desc">Scan with multiple security engines. Always works, even for new URLs.</span>
+                </a>
+            </div>
+        </div>
+        <div class="phishing-info">
+            <h2>What is Phishing?</h2>
+            <p>Phishing is a type of cyber attack where attackers create fake websites or links to trick you into entering your personal information, such as usernames and passwords. Always be cautious and check for signs of phishing before clicking or entering your credentials.</p>
+        </div>
+    </div>
+    <script>
+        // URL phishing checker logic
+        function isPhishingUrl(url) {
+            let reasons = [];
+            try {
+                let parsed = new URL(url);
+                // Rule: Not HTTPS
+                if (parsed.protocol !== 'https:') {
+                    reasons.push('The URL does not use HTTPS (secure connection).');
+                }
+                // Rule: Suspicious keywords
+                const suspiciousWords = ['login', 'verify', 'secure', 'account', 'update', 'bank', 'confirm'];
+                for (let word of suspiciousWords) {
+                    if (parsed.hostname.toLowerCase().includes(word) || (parsed.pathname && parsed.pathname.toLowerCase().includes(word))) {
+                        reasons.push(`The URL contains the suspicious word: "${word}".`);
+                    }
+                }
+                // Rule: Long or odd domain
+                if (parsed.hostname.length > 30) {
+                    reasons.push('The domain name is unusually long.');
+                }
+                // Rule: Use of hyphens or numbers in domain
+                if (/[-0-9]/.test(parsed.hostname.replace(/\./g, ''))) {
+                    reasons.push('The domain contains hyphens or numbers, which can be a sign of phishing.');
+                }
+                // Rule: Not a common TLD
+                if (!parsed.hostname.endsWith('.com') && !parsed.hostname.endsWith('.org') && !parsed.hostname.endsWith('.net')) {
+                    reasons.push('The domain does not use a common top-level domain (.com, .org, .net).');
+                }
+            } catch (e) {
+                reasons.push('The input is not a valid URL.');
+            }
+            return reasons;
+        }
+
+        function isValidUrl(url) {
+            try {
+                new URL(url);
+                return true;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        function updateExternalLinks(url) {
+            if (!isValidUrl(url)) {
+                document.getElementById('externalLinks').style.display = 'none';
+                return;
+            }
+            try {
+                // VirusTotal expects a base64-encoded URL (without padding)
+                const vtBase64 = btoa(url).replace(/=+$/, '');
+                document.getElementById('vtLink').href = `https://www.virustotal.com/gui/url/${vtBase64}/detection`;
+                document.getElementById('externalLinks').style.display = 'block';
+            } catch (e) {
+                document.getElementById('externalLinks').style.display = 'none';
+            }
+        }
+
+        document.getElementById('checkUrlBtn').addEventListener('click', function() {
+            const url = document.getElementById('urlInput').value.trim();
+            const resultDiv = document.getElementById('urlCheckResult');
+            resultDiv.style.display = 'block';
+            if (!url) {
+                resultDiv.innerHTML = '<span style="color:#d4380d;">Please enter a URL.</span>';
+                document.getElementById('externalLinks').style.display = 'none';
+                return;
+            }
+            const reasons = isPhishingUrl(url);
+            if (reasons.length === 0) {
+                resultDiv.innerHTML = '<span style="color:#389e0d;">This URL looks safe based on basic checks. Always double-check and use your judgment!</span>';
+            } else {
+                resultDiv.innerHTML = '<span style="color:#d4380d;"><b>Warning:</b> This URL may be suspicious!</span><ul>' + reasons.map(r => `<li>${r}</li>`).join('') + '</ul>';
+            }
+            updateExternalLinks(url);
+        });
+    </script>
+</body>
+</html> 
