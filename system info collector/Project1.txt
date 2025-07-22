@@ -1,4 +1,0 @@
- 1. System Info Collector (Windows/Linux)
-סקריפט שמוציא פרטי מערכת (CPU, RAM, IP, מערכת הפעלה, גרסה, דיסק פנוי) בלחיצה אחת.
-🔹 טכנולוגיה: Python / Bash
-🎯 שימושי בטכנאות ובדיקות.
