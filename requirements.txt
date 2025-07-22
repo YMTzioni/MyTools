@@ -1,5 +1,1 @@
-psutil
-wmi
-pywin32
-requests
-tabulate 
+# No external dependencies required for basic port scanning and socket operations 

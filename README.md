@@ -1,64 +1,40 @@
-# System Info Collector
+# 🧪 Port Scanner & Simple Vulnerability Check
 
-A simple Python script to collect and display key system information for Windows machines. Useful for technicians, diagnostics, and quick system overviews.
+A simple Python tool to scan open ports on a target machine and perform basic vulnerability checks.
 
 ## Features
-- Displays CPU info (name, cores)
-- Shows total RAM
-- Reports local and public IP addresses
-- Shows OS and version
-- Displays free disk space
-- Shows system uptime
-- Displays machine model
-- Lists network adapters
-- Shows CPU temperature (if available)
-- Robust error handling
-- Output is organized by sections for readability
+- **Dynamic input:** Choose target (IP/hostname), port range (e.g. 20-1024 or 'all'), and socket timeout.
+- **Multi-threaded scan:** Fast scanning using 200 threads.
+- **Service detection:** Shows the common service name for each port (if known).
+- **Summary:** At the end, lists all open ports found.
 
-## Requirements
-- Python 3.7+
-- See `requirements.txt` for required packages
-
-## Installation
-1. Clone or download this repository.
-2. Install dependencies:
-   ```
-   pip install -r requirements.txt
-   ```
 
 ## Usage
-Run the script in your terminal:
+1. Run `port_scanner.py` with Python 3.
+2. Enter the target address, port range (e.g. `80-1000` or `all`), and timeout when prompted.
+3. The script will scan the selected ports and print results as it goes.
+4. At the end, you'll see a summary of all open ports.
+
+## Example
 ```
-python system_info_collector.py
+--- Port Scanner ---
+Enter IP address or hostname (default: localhost): localhost
+Enter port range (e.g. 20-1024, 'all' for 1-65535, default: 1-1024): 20-100
+Enter socket timeout in seconds (default: 0.2): 0.2
+
+Scanning ports on localhost with 200 threads...
+Port    21: closed | Service: ftp
+Port    22: OPEN   | Service: ssh
+...
+
+Scan completed. Elapsed time: 1.23 seconds.
+
+Open ports:
+  Port    22 | Service: ssh
 ```
 
-## Example Output
-```
-==============================
-   System Information Report   
-==============================
 
-[System]
-| Property         | Value                |
-|------------------|----------------------|
-| Operating System | Windows              |
-| OS Version       | 10.0.19045           |
-| System Uptime    | 2:15:34              |
-| Machine Model    | Dell Inc. XPS 13     |
+## Requirements
+- Python 3.x
+- No external dependencies required for basic scan
 
-[Hardware]
-| Property            | Value      |
-|---------------------|-----------|
-| CPU                 | Intel ... |
-| CPU Cores           | 8         |
-| Total RAM (GB)      | 16.00     |
-| Free Disk Space (GB)| 120.50    |
-| CPU Temperature (C) | 45.0      |
-
-[Network]
-| Property           | Value                        |
-|--------------------|-----------------------------|
-| IP Address         | 192.168.1.10                |
-| Public IP Address  | 8.8.8.8                     |
-| Network Adapters   | Intel(R) Ethernet ... (xx)  |
-``` 
